@@ -1,0 +1,954 @@
+﻿openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: iHerb WMS API
+  description: |
+    iHerb's WMS Endpoints for 3PL Integration.
+    ## Security
+    The API is secured via HTTP [Basic Authentication](https://en.wikipedia.org/wiki/Basic_access_authentication).  This requires that an HTTP Header of `Authorization` be set with the value of `Basic [Base64Encoded username:password]`.
+    For Example, if the username is `TestMan` and the password is `GreatPassword` the HTTP header would be Base64 encoded of `TestMan:GreatPassword`.
+    ### Example
+    ```Authorization: Basic VGVzdE1hbjpHcmVhdFBhc3N3b3Jk```
+servers:
+  - description: Swaggerhub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/hugo.sanchez/iHerb-WMS-API/1.0.0-oas3-1
+  - description: Prism    
+    url: http://localhost:4010
+tags: 
+  - name: HealthCheck
+    description: | 
+      ### HealthCheck related endpoints
+  - name: Inventory
+    description: | 
+      ### Inventory Update Operations
+      Receipts, Transfers, Cycle Counts
+  - name: Order
+    description: |
+      ### Order Related Updates
+      Update Order Picks, Shipped, and Manifests
+paths:
+  /api/HealthCheck:    
+    get:
+      description: Healthcheck endpoint to verify service is live.
+      tags:
+        - HealthCheck
+      operationId: HealthCheck
+      responses:
+        '200':
+          description: Success
+  /api/Inventory/NotifyTransferShipmentPreReceived:
+    description: Message sent when a pallet arrives at the Warehouse.
+    post:
+      tags:
+        - Inventory
+      operationId: NotifyTransferShipmentPreReceived
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/TransferShipmentPreReceipt'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransferShipmentPreReceipt'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/TransferShipmentPreReceipt'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/TransferShipmentPreReceipt'
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+  /api/Inventory/NotifyTransferShipmentReceived:
+    post:
+      tags:
+        - Inventory
+      operationId: NotifyTransferShipmentReceived
+      description: Receive Transfer Shipment
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/TransferShipmentReceipt'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransferShipmentReceipt'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/TransferShipmentReceipt'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/TransferShipmentReceipt'
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+  /api/Inventory/NotifyInventoryAdjusted:
+    post:
+      tags:
+        - Inventory
+      operationId: NotifyInventoryAdjusted
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/InventoryAdjustment'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InventoryAdjustment'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/InventoryAdjustment'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/InventoryAdjustment'
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+  /api/Inventory/BinToBinTransfered:
+    post:
+      tags:
+        - Inventory
+      operationId: BinToBinTransfered
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/BinToBinTransaction'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BinToBinTransaction'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/BinToBinTransaction'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/BinToBinTransaction'
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+  /api/Inventory/CycleCount:
+    post:
+      tags:
+        - Inventory
+      operationId: CycleCount
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/CycleCountTransaction'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CycleCountTransaction'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/CycleCountTransaction'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/CycleCountTransaction'
+      responses:
+        '200':
+          description: Success
+          content:           
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+              examples: 
+                good: 
+                  summary: Successful call
+                  value:
+                    Status: "S"
+                    StatusCode: "200"
+                    Message: "Success"
+                error:
+                  summary: Handled Error
+                  value:
+                    Status: "E"
+                    StatusCode: "200"
+                    Message: "Sample Error Message:  Something went wrong"
+            text/json:
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '500':
+          description: "Unhandled Error"            
+  /api/Inventory/UpdateInventorySummary:
+    post:
+      tags:
+        - Inventory
+      operationId: UpdateInventorySummary
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/InventorySummary'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InventorySummary'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/InventorySummary'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/InventorySummary'
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+  /api/Order/NotifyOrderPicked:
+    post:
+      tags:
+        - Order
+      operationId: NotifyOrderPicked
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/OrderPickConfirmation'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderPickConfirmation'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/OrderPickConfirmation'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/OrderPickConfirmation'
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+  /api/Order/UpdateOrderShippingWeight:
+    post:
+      tags:
+        - Order
+      operationId: UpdateOrderShippingWeight
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/OrderShippingWeight'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderShippingWeight'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/OrderShippingWeight'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/OrderShippingWeight'
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+  /api/Order/NotifyOrderShipped:
+    post:
+      tags:
+        - Order
+      operationId: NotifyOrderShipped
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/OrderShipConfirmation'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderShipConfirmation'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/OrderShipConfirmation'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/OrderShipConfirmation'
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+  /api/Order/NotifyShipmentManifestCreated:
+    post:
+      tags:
+        - Order
+      operationId: NotifyShipmentManifestCreated
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/ShipmentManifest'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShipmentManifest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ShipmentManifest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/ShipmentManifest'
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+components:
+  schemas:
+    TransferShipmentPreReceipt:
+      type: object
+      properties:
+        internalASN:
+          description: Advanced Shipment Notification Number
+          type: string
+          example: X3PL181120000
+          maxLength: 50          
+        dateReceived:
+          description: Products Received Date in Warehouse
+          format: date-time
+          type: string            
+    SimpleResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          maxLength: 1
+          description: S:Success, E:Error
+          example: S
+        message:
+          type: string
+          maxLength: 1000
+          description: Error Message
+          example: |
+            Cannot connect to the database with DataSource class "oracle.jdbc.pool.OracleDataSource".
+            ORA-02391: exceeded simultaneous Comments limit
+        statusCode:
+          format: int32
+          enum:
+            - 100
+            - 101
+            - 102
+            - 103
+            - 200
+            - 201
+            - 202
+            - 203
+            - 204
+            - 205
+            - 206
+            - 207
+            - 208
+            - 226
+            - 300
+            - 301
+            - 302
+            - 303
+            - 304
+            - 305
+            - 306
+            - 307
+            - 308
+            - 400
+            - 401
+            - 402
+            - 403
+            - 404
+            - 405
+            - 406
+            - 407
+            - 408
+            - 409
+            - 410
+            - 411
+            - 412
+            - 413
+            - 414
+            - 415
+            - 416
+            - 417
+            - 421
+            - 422
+            - 423
+            - 424
+            - 426
+            - 428
+            - 429
+            - 431
+            - 451
+            - 500
+            - 501
+            - 502
+            - 503
+            - 504
+            - 505
+            - 506
+            - 507
+            - 508
+            - 510
+            - 511
+          type: integer
+    TransferShipmentReceipt:
+      type: object
+      properties:
+        asnLineItems:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/AsnLineItem'
+    AsnLineItem:
+      type: object
+      properties:
+        internalAsn:
+          description: Advanced Shipment Notification Number
+          maxLength: 50          
+          type: string
+          example: X3PL181120000
+        licensePlateNumber:
+          description: License Plate Number
+          type: string
+          maxLength: 50
+          example: 218429
+        binLocation:
+          type: string
+          description: Bin Location (for future use)
+          maxLength: 50
+        inventoryType:
+          description: |
+            0 = In Pick Location,
+            1 = Not Available, not in Pick Location
+          format: int32
+          type: integer
+          example: 0
+        partNumber:
+          type: string
+          description: iHerb Part Number/SKU
+          example: DRB-00104
+          maxLength: 9
+        quantityReceived:
+          format: int32
+          description: Total units received for part number
+          type: integer
+          example: 12
+        casepack:
+          format: int32
+          description: Quantity in case
+          type: integer
+          example: 24
+        lotNumber:
+          type: string
+          description: LotNumberReceived (from iHerb)
+          example: 112233
+          maxLength: 50
+        dateExpires:
+          format: YYYY-MM-DDThh:mm:ss
+          type: string
+          description: DateExpiresReceived (from iHerb)
+          example: 2020-03-07T00:00:00
+        dateReceived:
+          description: Products Received Date in Warehouse
+          format: YYYY-MM-DDThh:mm:ss
+          type: string
+          example: 2020-03-07T12:34:56
+        usernameReceived:
+          type: string
+        dateCreated:
+          format: date-time
+          type: string
+        usernameCreated:
+          type: string
+        dateLastChanged:
+          format: date-time
+          type: string
+        usernameLastChanged:
+          type: string
+          maxLength: 30
+          description: receipt worker name
+          example: myUsername
+    InventoryAdjustment:
+      type: object
+      properties:
+        binLocation:
+          type: string
+          description: Bin Location (for future use)
+          maxLength: 50        
+        partNumber:
+          type: string
+          description: iHerb Part Number/SKU
+          example: DRB-00104
+          maxLength: 9
+        dateExpires:
+          format: YYYY-MM-DDThh:mm:ss
+          type: string
+          description: Expiration Date
+          example: 2020-03-07T00:00:00
+        quantityAdjusted:
+          description: Quantity adjusted, adjust inventory up "12", adjust inventory down "-12"
+          format: int32
+          type: integer
+          example: -12
+        inventoryType:
+          description: |
+            0 = Adjustment performed on Inventory Available in Pick Location,
+            1 = Adjustment performed on Inventory Not Available, not in Pick Location
+          format: int32
+          type: integer          
+          example: 0
+        reasonCode:
+          format: int32
+          type: integer
+          description: Adjustment Reason Code
+          enum:
+            - 0 = Unknown
+            - 2 = CycleCountTask
+            - 3 = QuantityIn
+            - 4 = QuantityOut
+            - 5 = AdjustedPutBack
+            - 7 = Damaged
+            - 8 = DamagedDonation
+            - 9 = Defective
+            - 10 = Discontinued
+            - 11 = Donation
+            - 12 = Expired
+            - 13 = Found
+            - 14 = Lost
+            - 16 = OtherReason
+            - 18 = Recall
+            - 19 = ReceivedWrongQty
+            - 20 = Return
+            - 26 = ReceivedDamaged
+            - 27 = ReceivedOverage
+            - 28
+            - 29 = ReceivedWrongExpDate
+          example: 28
+        dateCreated:
+          format: YYYY-MM-DDThh:mm:ss
+          type: string
+          description: Date Created
+          example: 2020-03-07T00:00:00
+        usernameCreated:
+          description: User created
+          type: string
+          maxLength: 30
+          example: jsmith
+        dateLastChanged:          
+          format: YYYY-MM-DDThh:mm:ss
+          type: string
+          description: Date Last Changes
+          example: 2020-03-07T00:00:00
+        usernameLastChanged:
+          description: User Last Changed
+          type: string
+          maxLength: 30
+          example: jsmith
+        reF_BL_NO:
+          description: BOL (Bill of Lading) Number
+          type: string
+          maxLength: 100
+          example: USUSS0008039
+    BinToBinTransaction:
+      type: object
+      properties:
+        transactionId:
+          type: string
+          description: Transaction Id
+        partNumber:
+          type: string
+          description: iHerb Part Number/SKU
+          example: DRB-00104
+          maxLength: 9
+        dateExpires:
+          format: YYYY-MM-DDThh:mm:ss
+          type: string
+          description: Expiration Date
+          example: 2020-03-07T00:00:00
+        sourceBinLocation:
+          type: string
+          description: Source Bin Location (from)
+          maxLength: 50
+        sourceBinInventoryType:
+          type: string
+        destinationBinLocation:
+          type: string
+          description: Source Bin Location (from)
+          maxLength: 50
+        destinationBinInventoryType:
+          type: string
+        quantity:
+          description: Quantity moved
+          format: int32
+          type: integer
+          example: 8
+        dateCreated:
+          format: YYYY-MM-DDThh:mm:ss
+          type: string
+          description: Date Created
+          example: 2020-03-07T00:00:00
+        usernameCreated:
+          description: User created
+          type: string
+          maxLength: 30
+          example: jsmith
+        dateLastChanged:
+          format: YYYY-MM-DDThh:mm:ss
+          type: string
+          description: Date Last Changes
+          example: 2020-03-07T00:00:00
+        usernameLastChanged:
+          description: User Last Changed
+          type: string
+          maxLength: 30
+          example: jsmith
+    CycleCountTransaction:
+      type: object
+      properties:
+        transactionId:
+          type: string
+          description: TransactionId
+          maxLength: 50
+        cycleCountId:
+          type: string
+        cycleCountLineItems:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/CycleCountLineItem'
+    CycleCountLineItem:
+      type: object
+      properties:
+        partNumber:
+          type: string
+          description: iHerb Part Number/SKU
+          example: DRB-00104
+          maxLength: 9
+        dateExpires:
+          format: YYYY-MM-DDThh:mm:ss
+          type: string
+          description: Expiration Date
+          example: 2020-03-07T00:00:00
+        binLocation:
+          description: Cycle Count Bin Location
+          type: string
+          maxLength: 50
+        binInventoryType:
+          type: string
+        preCountQuantity:
+          type: integer
+          description: Prior Count Quantity          
+        postCountQuantity:
+          type: integer
+          description: Post Count Quantity
+        dateCreated:
+          format: YYYY-MM-DDThh:mm:ss
+          type: string
+          description: Date Created
+          example: 2020-03-07T00:00:00
+        usernameCreated:
+          description: User created
+          type: string
+          maxLength: 30
+          example: jsmith
+        dateLastChanged:
+          format: YYYY-MM-DDThh:mm:ss
+          type: string
+          description: Date Last Changes
+          example: 2020-03-07T00:00:00
+        usernameLastChanged:
+          description: User Last Changed
+          type: string
+          maxLength: 30
+          example: jsmith    
+    InventorySummary:
+      type: object
+      properties:
+        inventory:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/InventoryProduct'
+    InventoryProduct:
+      type: object
+      properties:
+        partNumber:
+          type: string
+          description: iHerb Part Number/SKU
+          example: DRB-00104
+          maxLength: 9
+        dateExpires:
+          format: YYYY-MM-DDThh:mm:ss
+          type: string
+          description: Expiration Date
+          example: 2020-03-07T00:00:00
+        quantityOnHand:
+          format: int32
+          type: integer
+          description: Quantity On Hand
+        binlocation:
+          type: string
+          description: Inventory Bin Location
+          maxLength: 50
+        inventoryType:
+          description: |
+            0 = In Pick Location,
+            1 = Not Available, not in Pick Location
+          format: int32
+          type: integer
+          example: 0
+        dateCreated:
+          format: YYYY-MM-DDThh:mm:ss
+          type: string
+          description: Date Created
+          example: 2020-03-07T00:00:00
+        dateLastChanged:
+          format: YYYY-MM-DDThh:mm:ss
+          type: string
+          description: Date Last Changes
+          example: 2020-03-07T00:00:00
+    OrderPickConfirmation:
+      type: object
+      properties:
+        orderLineItems:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderLineItem'
+    OrderLineItem:
+      type: object
+      properties:
+        orderNo:
+          type: string
+          description: Order number and order extension
+          maxLength: 50
+          example: 43901393-0
+        orderLineItemId:
+          format: int32
+          type: integer
+          example: 1
+        partNumber:
+          type: string
+          description: iHerb Part Number/SKU
+          example: DRB-00104
+          maxLength: 9
+        quantityPicked:
+          description: Quantity Picked
+          format: int32
+          type: integer
+          example: 5
+        binLocation:
+          type: string
+          description: Bin Location (for future use)
+          maxLength: 50
+        inventoryType:
+          description: |
+            0 = In Pick Location,
+            1 = Not Available, not in Pick Location
+          format: int32
+          type: integer
+          example: 0
+        shortPick:
+          description: Is Short Pick?
+          format: int32
+          type: integer
+          enum: 
+            - 1 = True
+            - 0 = False
+          example: 0
+        dateCreated:
+          format: YYYY-MM-DDThh:mm:ss
+          type: string
+          description: Date Created
+          example: 2020-03-07T00:00:00
+    OrderShippingWeight:
+      type: object
+      properties:
+        orderNo:
+          type: string
+          description: Order number and order extension
+          maxLength: 50
+          example: 43901393-0
+        weight:
+          format: double
+          type: number
+          description: Order Weight in pounds
+          example: 1.25
+        dateCreated:
+          format: YYYY-MM-DDThh:mm:ss
+          type: string
+          description: Date Created
+          example: 2020-03-07T00:00:00
+    OrderShipConfirmation:
+      type: object
+      properties:
+        orderNo:
+          type: string
+          description: Order number and order extension
+          maxLength: 50
+          example: 43901393-0
+        dateCreated:
+          format: YYYY-MM-DDThh:mm:ss
+          type: string
+          description: Date Created
+          example: 2020-03-07T00:00:00
+    ShipmentManifest:
+      type: object
+      properties:
+        manifestId:
+          type: string
+          description: Manifest ID
+          maxLength: 50
+          example: 1234567
+        shippingSortCode:
+          format: int32
+          type: integer
+          description: Shipping Sort Code
+          example: 105
+        destinationCountryCode:
+          type: string
+          maxLength: 2
+          description: 2 character country code
+          example: CN
+        packageCount:          
+          format: int32
+          type: integer
+          description: Total number of packages on the shipment manifest
+          example: 70
+        packageWeight:
+          description: Total weight for all packages on the shipment manifest, in pounds
+          format: double
+          type: number
+          example: 1333.123
+        palletCount:
+          format: int32
+          type: integer
+          description: Total number of pallets on the shipment manifest
+          example: 4
+        palletType:
+          type: string
+          description: Pallet Type
+          enum:
+            - Plastic
+            - Wooden
+          example: Wooden
+        dateCreated:
+          format: YYYY-MM-DDThh:mm:ss
+          type: string
+          description: Date Created
+          example: 2020-03-07T00:00:00
+        shipmentOrders:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/ShipmentOrder'
+    ShipmentOrder:
+      type: object
+      properties:
+        orderNo:
+          type: string
+          description: Order number and order extension
+          maxLength: 50
+          example: 43901393-0
+        epnNo:
+          type: string
+          description: Permit No.
+          example: ABC123456789
+          maxLength: 50
+        palletNo:
+          type: string
+          description: Pallet ID
+          example: 200826102
+        palletDimension:
+          type: string
+          description: Pallet Width, Length, Height
+          example: 100.120.150
+        palletType:
+          type: string
+          description: Pallet Type
+          enum:
+            - Plastic
+            - Wooden
+          example: Wooden
+        packingType:
+          type: string
+          description: Packing Type
+          enum:
+            - Gaylord
+            - Palletized
+          example: Palletized          
+        stacked:
+          type: string
