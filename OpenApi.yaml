@@ -9,11 +9,15 @@ info:
     For Example, if the username is `TestMan` and the password is `GreatPassword` the HTTP header would be Base64 encoded of `TestMan:GreatPassword`.
     ### Example
     ```Authorization: Basic VGVzdE1hbjpHcmVhdFBhc3N3b3Jk```
+    ## Response
+    The API will response with HTTP Status code of `200`, with any successful or handled error.  For any unhandled response, the response code will be `500` with a message as the body of the response.  
 servers:
+  - description: iHerb Test Environment
+    url: https://wmshk2-thirdpartylogistics-inbound.iherbtest.com
   - description: Swaggerhub API Auto Mocking
     url: https://virtserver.swaggerhub.com/hugo.sanchez/iHerb-WMS-API/1.0.0-oas3-1
-  - description: Prism    
-    url: http://localhost:4010
+  - description: Prism
+    url: http://localhost:4010  
 tags: 
   - name: HealthCheck
     description: | 
@@ -43,32 +47,17 @@ paths:
         - Inventory
       operationId: NotifyTransferShipmentPreReceived
       requestBody:
-        content:
-          application/json-patch+json:
-            schema:
-              $ref: '#/components/schemas/TransferShipmentPreReceipt'
+        content:          
           application/json:
             schema:
-              $ref: '#/components/schemas/TransferShipmentPreReceipt'
-          text/json:
-            schema:
-              $ref: '#/components/schemas/TransferShipmentPreReceipt'
-          application/*+json:
-            schema:
-              $ref: '#/components/schemas/TransferShipmentPreReceipt'
+              $ref: '#/components/schemas/TransferShipmentPreReceipt'          
       responses:
         '200':
           description: Success
           content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
             application/json:
               schema:
-                $ref: '#/components/schemas/SimpleResponse'
-            text/json:
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
+                $ref: '#/components/schemas/SimpleResponse'            
   /api/Inventory/NotifyTransferShipmentReceived:
     post:
       tags:
@@ -77,29 +66,14 @@ paths:
       description: Receive Transfer Shipment
       requestBody:
         content:
-          application/json-patch+json:
-            schema:
-              $ref: '#/components/schemas/TransferShipmentReceipt'
           application/json:
             schema:
-              $ref: '#/components/schemas/TransferShipmentReceipt'
-          text/json:
-            schema:
-              $ref: '#/components/schemas/TransferShipmentReceipt'
-          application/*+json:
-            schema:
-              $ref: '#/components/schemas/TransferShipmentReceipt'
+              $ref: '#/components/schemas/TransferShipmentReceipt'          
       responses:
         '200':
           description: Success
           content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
             application/json:
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-            text/json:
               schema:
                 $ref: '#/components/schemas/SimpleResponse'
   /api/Inventory/NotifyInventoryAdjusted:
@@ -109,29 +83,14 @@ paths:
       operationId: NotifyInventoryAdjusted
       requestBody:
         content:
-          application/json-patch+json:
-            schema:
-              $ref: '#/components/schemas/InventoryAdjustment'
           application/json:
-            schema:
-              $ref: '#/components/schemas/InventoryAdjustment'
-          text/json:
-            schema:
-              $ref: '#/components/schemas/InventoryAdjustment'
-          application/*+json:
             schema:
               $ref: '#/components/schemas/InventoryAdjustment'
       responses:
         '200':
           description: Success
           content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
             application/json:
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-            text/json:
               schema:
                 $ref: '#/components/schemas/SimpleResponse'
   /api/Inventory/BinToBinTransfered:
@@ -141,16 +100,7 @@ paths:
       operationId: BinToBinTransfered
       requestBody:
         content:
-          application/json-patch+json:
-            schema:
-              $ref: '#/components/schemas/BinToBinTransaction'
           application/json:
-            schema:
-              $ref: '#/components/schemas/BinToBinTransaction'
-          text/json:
-            schema:
-              $ref: '#/components/schemas/BinToBinTransaction'
-          application/*+json:
             schema:
               $ref: '#/components/schemas/BinToBinTransaction'
       responses:
@@ -173,16 +123,7 @@ paths:
       operationId: CycleCount
       requestBody:
         content:
-          application/json-patch+json:
-            schema:
-              $ref: '#/components/schemas/CycleCountTransaction'
           application/json:
-            schema:
-              $ref: '#/components/schemas/CycleCountTransaction'
-          text/json:
-            schema:
-              $ref: '#/components/schemas/CycleCountTransaction'
-          application/*+json:
             schema:
               $ref: '#/components/schemas/CycleCountTransaction'
       responses:
@@ -217,29 +158,14 @@ paths:
       operationId: UpdateInventorySummary
       requestBody:
         content:
-          application/json-patch+json:
-            schema:
-              $ref: '#/components/schemas/InventorySummary'
           application/json:
-            schema:
-              $ref: '#/components/schemas/InventorySummary'
-          text/json:
-            schema:
-              $ref: '#/components/schemas/InventorySummary'
-          application/*+json:
             schema:
               $ref: '#/components/schemas/InventorySummary'
       responses:
         '200':
           description: Success
           content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
             application/json:
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-            text/json:
               schema:
                 $ref: '#/components/schemas/SimpleResponse'
   /api/Order/NotifyOrderPicked:
@@ -249,29 +175,14 @@ paths:
       operationId: NotifyOrderPicked
       requestBody:
         content:
-          application/json-patch+json:
-            schema:
-              $ref: '#/components/schemas/OrderPickConfirmation'
           application/json:
-            schema:
-              $ref: '#/components/schemas/OrderPickConfirmation'
-          text/json:
-            schema:
-              $ref: '#/components/schemas/OrderPickConfirmation'
-          application/*+json:
             schema:
               $ref: '#/components/schemas/OrderPickConfirmation'
       responses:
         '200':
           description: Success
           content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
             application/json:
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-            text/json:
               schema:
                 $ref: '#/components/schemas/SimpleResponse'
   /api/Order/UpdateOrderShippingWeight:
@@ -281,29 +192,14 @@ paths:
       operationId: UpdateOrderShippingWeight
       requestBody:
         content:
-          application/json-patch+json:
-            schema:
-              $ref: '#/components/schemas/OrderShippingWeight'
           application/json:
-            schema:
-              $ref: '#/components/schemas/OrderShippingWeight'
-          text/json:
-            schema:
-              $ref: '#/components/schemas/OrderShippingWeight'
-          application/*+json:
             schema:
               $ref: '#/components/schemas/OrderShippingWeight'
       responses:
         '200':
           description: Success
           content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
             application/json:
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-            text/json:
               schema:
                 $ref: '#/components/schemas/SimpleResponse'
   /api/Order/NotifyOrderShipped:
@@ -313,29 +209,14 @@ paths:
       operationId: NotifyOrderShipped
       requestBody:
         content:
-          application/json-patch+json:
-            schema:
-              $ref: '#/components/schemas/OrderShipConfirmation'
           application/json:
-            schema:
-              $ref: '#/components/schemas/OrderShipConfirmation'
-          text/json:
-            schema:
-              $ref: '#/components/schemas/OrderShipConfirmation'
-          application/*+json:
             schema:
               $ref: '#/components/schemas/OrderShipConfirmation'
       responses:
         '200':
           description: Success
           content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
             application/json:
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-            text/json:
               schema:
                 $ref: '#/components/schemas/SimpleResponse'
   /api/Order/NotifyShipmentManifestCreated:
@@ -345,29 +226,14 @@ paths:
       operationId: NotifyShipmentManifestCreated
       requestBody:
         content:
-          application/json-patch+json:
-            schema:
-              $ref: '#/components/schemas/ShipmentManifest'
           application/json:
-            schema:
-              $ref: '#/components/schemas/ShipmentManifest'
-          text/json:
-            schema:
-              $ref: '#/components/schemas/ShipmentManifest'
-          application/*+json:
             schema:
               $ref: '#/components/schemas/ShipmentManifest'
       responses:
         '200':
           description: Success
           content:
-            text/plain:
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
             application/json:
-              schema:
-                $ref: '#/components/schemas/SimpleResponse'
-            text/json:
               schema:
                 $ref: '#/components/schemas/SimpleResponse'
 components:
