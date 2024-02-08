@@ -1,7 +1,7 @@
 ﻿openapi: 3.0.0
 info:
   version: 1.0.0
-  title: iHerb 3PL-WMS Adapter API
+  title: iHerb 3PL - WMS Adapter API
   description: |
     An API for a 3PL distribution center to send information to iHerb WMS.     
     ## Security
