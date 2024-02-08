@@ -1,9 +1,9 @@
 ﻿openapi: 3.0.0
 info:
   version: 1.0.0
-  title: iHerb Third-Party Logistics - WMS Adapter API
+  title: iHerb 3PL-WMS Adapter API
   description: |
-    An API for a 3PL to send information to iHerb WMS.     
+    An API for a 3PL distribution center to send information to iHerb WMS.     
     ## Security
     The API is secured via HTTP [Basic Authentication](https://en.wikipedia.org/wiki/Basic_access_authentication).  This requires that an HTTP Header of `Authorization` be set with the value of `Basic [Base64Encoded username:password]`.
     For Example, if the username is `TestMan` and the password is `GreatPassword` the HTTP header would be Base64 encoded of `TestMan:GreatPassword`.    
