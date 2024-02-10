@@ -1,0 +1,855 @@
+﻿openapi: 3.0.1
+info:
+  version: 1.0.0-oas3-1
+  title: iHerb's 3PL Vendor API
+  description: |
+    API Provided by 3PL Vendor to allow iHerb to transmit information to the 3PL.
+    ## Security
+    The API is secured via HTTP [Basic Authentication](https://en.wikipedia.org/wiki/Basic_access_authentication).  This requires that an HTTP Header of `Authorization` be set with the value of `Basic [Base64Encoded username:password]`.
+    For Example, if the username is `TestMain` and the password is `GreatPassword` the HTTP header would be Base64 encoded of `TestMan:GreatPassword`.
+    ### Example
+    ```Authorization: Basic VGVzdE1hbjpHcmVhdFBhc3N3b3Jk``` 
+paths:
+  /api/HealthCheck:
+    get:
+      tags:
+        - HealthCheck
+      operationId: Health Check
+      summary: Health Check
+      description: Used for verifying that the Service is up and functioning.
+      security: []
+      responses:
+        '200':
+          description: Success
+  /api/Inventory/ProductMaster:
+    post:
+      tags:
+        - Inventory
+      operationId: ProductMaster
+      summary: "Send Product Master Information"
+      security: []
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/Products'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Products'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/Products'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/Products'
+      responses:
+        '200':
+          description: Success
+  /api/Inventory/TransferShipment:
+    post:
+      summary: "Transfer Shipment Sent"
+      description: "Transfer Shipment Sent"
+      security: []
+      tags:
+        - Inventory
+      operationId: TransferShipment
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/TransferShipment'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransferShipment'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/TransferShipment'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/TransferShipment'
+      responses:
+        '200':
+          description: Success
+  /api/Inventory/TransferShipmentMBOL:
+    post:
+      summary: "Transfer Shipment Master Bill of Lading"
+      description: "Transfer Shipment Master Bill of Lading"
+      security: []
+      tags:
+        - Inventory
+      operationId: TransferShipmentMBOL
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/MasterBillOfLading'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MasterBillOfLading'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/MasterBillOfLading'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/MasterBillOfLading'
+      responses:
+        '200':
+          description: Success
+  /api/Order/FulfillOrder:
+    post:
+      summary: "iHerb Request to Fulifll Order"
+      security: []
+      tags:
+        - Order
+      operationId: "FulfillOrder"
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/OrderInformation'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderInformation'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/OrderInformation'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/OrderInformation'
+      responses:
+        '200':
+          description: Call Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimpleResponse'
+        '401':
+          description: Authorization Failed
+        '501':
+          description: System Error
+  /api/Order/SalesOrderUpdate:
+    post:
+      summary: "Sales Order Update"
+      security: []
+      tags:
+        - Order
+      operationId: SalesOrderUpdate
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/OrderUpdate'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderUpdate'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/OrderUpdate'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/OrderUpdate'
+      responses:
+        '200':
+          description: Success
+      description: "Test Description : "
+  /api/Order/SalesOrderCancel:
+    post:
+      summary: "Sales Order Cancel"
+      security: []
+      tags:
+        - Order
+      operationId: SalesOrderCancel
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/OrderCancellation'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderCancellation'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/OrderCancellation'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/OrderCancellation'
+      responses:
+        '200':
+          description: Success
+  /api/Order/ShipLabelZPL:
+    post:
+      summary: "Send Ship Label ZPL for Order"
+      security: []
+      tags:
+        - Order
+      operationId: ShipLabelZPL
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/OrderShippingLabelZpl'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderShippingLabelZpl'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/OrderShippingLabelZpl'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/OrderShippingLabelZpl'
+      responses:
+        '200':
+          description: Success
+  /api/Order/ShipmentManifest:
+    post:
+      summary: "Shipment Manifest Master Bill of Lading"
+      security: []
+      tags:
+        - Order
+      operationId: ShipmentManifest
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/ShipmentManifestMasterBillOfLading'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShipmentManifestMasterBillOfLading'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ShipmentManifestMasterBillOfLading'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/ShipmentManifestMasterBillOfLading'
+      responses:
+        '200':
+          description: Success
+servers:
+  - url: https://virtserver.swaggerhub.com/iherb/3PL-Outbound-DFW-1/1.0
+components:
+  schemas:
+    Products:
+      type: object
+      properties:
+        productMaster:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductDetails'
+    ProductDetails:
+      type: object
+      properties:
+        partNumber:
+          description: "iHerb Part Number/SKU"      
+          type: string
+          maxLength: 9
+          example: DRB-00104
+        displayName:
+          type: string
+          description: "Display Name"
+          maxLength: 300
+          example: "Capsules"
+        upcCode:
+          type: string
+          description: UPC Code
+          maxLength: 15
+          example: 753950001046
+        width:
+          description: Width of the product, in inches
+          format: double
+          type: number
+          example: 2.4
+        height:
+          description: Height of the product, in inches
+          format: double
+          type: number
+          example: 5.1
+        length:
+          description: Length of the product, in inches
+          format: double
+          type: number
+          example: 0.5
+        actualWeight:
+          description: Product Weight, in pounds.
+          format: double
+          type: number
+        htsCode:
+          description: Harmonized System code (send null if no value)
+          type: string
+          example: 3304.99.1000
+          maxLength: 20
+        retailPrice:
+          description: Retail Price
+          format: double
+          type: number
+          example: 13.99
+        brandCode:
+          description: Brand Code
+          type: string
+          maxLength: 3
+          example: DRB
+        status:
+          description: |
+            **Product Status**
+            0 = OnSale,
+            1 = Discontinued,
+            2 = ComingSoon,
+            3 = NotAvailable,
+            4 = New,
+            5 = Invisible,
+            6 = NoPo
+          format: int32
+          type: integer
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6     
+          example: 1
+        iced:
+          description: Iced Product
+          type: boolean
+        material:
+          description: Material, 0=Plastic, 1=Glass
+          format: int32
+          type: integer
+          enum:
+            - 0
+            - 1
+          example: 0
+        hasExpireDate:
+          description: Has Expiration Date
+          type: boolean
+          example: true
+        onSaleDate:
+          description: Date Product is On Sale          
+          format: "YYYY-MM-DDThh:mm:ss"
+          type: string
+          example: "2020-03-07T00:00:00"
+        prePackingType:
+          format: int32
+          type: integer
+        vasTypeList:
+          type: string
+        purchasingType:
+          description: |
+            Pre Packing Type
+            0=None, 
+            1=ExtraPack, 
+            2=ReceivingExtraPack
+          format: int32
+          type: integer
+          example: 1
+        webCategory:
+          description: |
+            Web Category
+            0 = NotDefined,
+            1 = Supplements,
+            2 = BathBeauty,
+            3 = DietWeightLoss,
+            4 = FoodsandGrocery,
+            5 = Sports,
+            6 = ChildrensHealth,
+            7 = HealthyHomeandGarden,
+            8 = PetsCare,
+            9 = HealthTopics,
+            10 = Books,
+            11 = Herbs,
+            12 = Others,
+            13 = SkinCare
+          format: int32
+          type: integer
+          enum: 
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+            - 9
+            - 10
+            - 11
+            - 12
+            - 13
+          example: 8
+        productRank:
+          description: Item rank based on 90 day sales for that DC
+          format: int32
+          type: integer
+          example: 358
+        heatSensitive:
+          description: Heat Sensitive (1=True, 0=False)
+          type: boolean
+          example: 1
+        countryOfOrigin:
+          description: Country of Origin, 2 char country code
+          maxLength: 2
+          type: string
+          example: US
+        displayNameKor:
+          description: Display name Local Language
+          type: string
+          maxLength: 300
+          example: 150mg, 120 Capsules
+        dateCreated:
+          description: Order Created in PST (UTC-8)
+          format: Date YYYY-MM-DDThh:mm:ss
+          type: string        
+        dateLastChanged:
+          description: Order Created in PST (UTC-8)
+          format: Date YYYY-MM-DDThh:mm:ss
+          type: string
+        productImageUrl:
+          description: iherb.com product image url
+          type: string          
+    TransferShipment:
+      type: object
+      properties:
+        warehouseCode:
+          type: string
+          description: Warehouse Code for Source  Warehouse
+          example: RCA
+        vendorCode:
+          type: string
+          description: Product Vendor Code
+          example: IHERB            
+        internalAsn:
+          type: string
+          description: Advanced Shipment Notification Number
+          example: A3PL180101001
+        totalUnitsShipped:
+          format: int32
+          type: integer
+          description: Total Units Shipped
+          example: 200
+        totalLineItems:
+          format: int32
+          type: integer
+          description: Line Items Quantity
+          example: 40
+        totalShipmentWeight:
+          format: double
+          type: number
+          description: TotalShipmentWeight (In LB)
+          example: 150.37
+        dateShipped:
+          description: Date Shipped in PST (UTC-8)
+          format: Date YYYY-MM-DDThh:mm:ss
+          type: string
+          example: 2020-03-07T00:00:00
+        expectedDeliveryDate:
+          format: YYYY-MM-DDThh:mm:ss
+          type: string
+          description: Arrive Estimated Date
+          example: 2020-03-07T00:00:00
+        carrierName:
+          type: string
+          description: Carrier Name
+          example: UPS          
+        comments:
+          type: string
+          description: Comments
+          example: This is special
+        billofLadingNo:
+          type: string
+          description: Bill of Lading Number
+          example: HAMS18286543
+        dateCreated:
+          description: Date Created in PST (UTC-8)
+          format: Date YYYY-MM-DDThh:mm:ss
+          type: string
+          example: 2020-03-07T00:00:00
+        dateLastChanged:
+          description: Date Last Changed in PST (UTC-8)
+          format: Date YYYY-MM-DDThh:mm:ss
+          type: string
+          example: 2020-03-07T00:00:00
+        asnLineItems:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/TransferShipmentLineItem'
+    TransferShipmentLineItem:
+      type: object
+      properties:
+        internalASN:
+          type: string
+          description: Advance Shipment Notification Number
+          example: X3PL181120000
+        lpn:
+          type: string
+          description: License Plate Number
+          example: 218429
+        partNumber:
+          type: string
+          description: Part Number
+          example: DRB-00077
+        quantity:
+          format: int32
+          type: integer
+          description: Total units for part number
+          example: 24
+        casepack:
+          format: int32
+          type: integer
+          description: Quantity in case
+          example: 12
+        lotNumber:
+          type: string
+          description: LotNumber
+          example: 112233
+        dateExpires:
+          description: Date Expires in PST (UTC-8)
+          format: Date YYYY-MM-DDThh:mm:ss
+          type: string
+          example: 2020-03-07T00:00:00
+        asnPackLevelType:
+          format: int32
+          type: integer
+          description: "ASN Pack Level Type: 1 = Pallet, 2 = Carton"
+          enum:
+            - 1
+            - 2
+          example: 1
+    MasterBillOfLading:
+      type: object
+      required: 
+        - billOfLadingNo
+        - carrierName
+        - totalUnitsShipped
+        - totalLineItems
+        - totalShipmentWeight
+        - dateShipped
+        - dateCreated
+        - dateLastChanged
+        - transferShipmentMBOLLines
+      properties:
+        billOfLadingNo:
+          description: Bill of Lading Number
+          type: string
+          example: HAMS18286543
+        carrierName:
+          type: string
+          description: Carrier
+          example: SfExpress
+        totalUnitsShipped:
+          format: int32
+          type: integer
+          description: TotalUnitsShipped on MBOL (eaches)
+          example: 2000
+        totalLineItems:
+          format: int32
+          type: integer
+          example: 440
+          description: Line Items Quantity on MBOL
+        totalShipmentWeight:
+          format: double
+          type: number
+          description: TotalShipmentWeight on the MBOL in pounds
+          example: 500.37
+        dateShipped:
+          description: Date Shipped in PST (UTC-8)
+          format: Date YYYY-MM-DDThh:mm:ss
+          type: string
+          example: 2020-03-07T00:00:00
+        dateCreated:
+          description: Date Created in PST (UTC-8)
+          format: Date YYYY-MM-DDThh:mm:ss
+          type: string
+          example: 2020-03-07T00:00:00
+        dateLastChanged:
+          description: Date Last Changed in PST (UTC-8)
+          format: Date YYYY-MM-DDThh:mm:ss
+          type: string
+          example: 2020-03-07T00:00:00
+        transferShipmentMBOLLines:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/MasterBillOfLadingLineItem'
+    MasterBillOfLadingLineItem:
+      type: object
+      required: 
+        - internalAsn
+        - containerId
+      properties:
+        internalAsn:
+          type: string
+          description: Advanced Shipment Notification Number
+          example: X3PL181120000          
+        containerId:
+          type: string
+          description: Container ID
+          example: 218429
+    OrderInformation:
+      type: object
+      required:
+        - orderID
+        - destinationCountryCode
+        - totalItems
+        - packingBoxType
+        - dateCreated
+        - orderLineItems
+      properties:
+        orderID:
+          type: string
+          description: Order number and order extension.  Order ID is unique.
+          example: "43901393-0"
+          maxLength: 32
+        destinationCountryCode:
+          type: string
+          description: "2 digit country code"
+          example: "SA"
+          maxLength: 2
+        totalItems:
+          format: int32
+          type: integer
+          description: Total number of units on order
+          example: 70
+        estimatedWeightTotal:
+          format: double
+          type: number
+          description: Weight of Order in pounds
+          example: 30.79
+        consigneeName:
+          type: string
+          maxLength: 60
+          description: Cosignee Name
+          example: Mike Tyson
+        packingBoxType:
+          type: string
+          maxLength: 2
+          example: 2
+          description: Packing Box Type; Subject to change depending on Warehouse
+          enum:
+            - "1"
+            - "2"
+            - "3"
+            - "4"
+            - "5"
+            - "7"
+            - "8"            
+        dueDate:
+          description: Due Date
+          format: Date YYYY-MM-DDThh:mm:ss
+          type: string
+        dateCreated:
+          description: Order Created in GMT (UTC-8)
+          format: Date YYYY-MM-DDThh:mm:ss
+          type: string
+        orderLineItems:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderLineItemInformation'
+    OrderLineItemInformation:
+      type: object
+      required:
+        - orderID
+        - partNumber
+      properties:
+        orderID:
+          type: string
+          description: Order number and order extension
+          example: 43901393-0
+          maxLength: 32
+        lineItemID:
+          format: int32
+          type: integer
+          description: Line Item ID; Not split lines
+          example: 1
+        partNumber:
+          type: string
+          description: iHerb part Number / SKU
+          example: DRB-00888
+          maxLength: 9
+        quantity:
+          format: int32
+          type: integer
+          description: Order quantity in units/eaches
+        dateCreated:
+          description: Date in PST (UTC-8)
+          format: Date YYYY-MM-DDThh:mm:ss
+          type: string
+    OrderUpdate:
+      type: object
+      properties:
+        orderID:
+          type: string
+          description: Order number and order extension
+          example: 43901393-0
+          maxLength: 32
+        destinationCountryCode:
+          type: string
+          description: "2 digit country code"
+          example: "SA"
+          maxLength: 2
+        totalItems:
+          format: int32
+          type: integer
+          description: Total number of units on order
+          example: 15
+        estimatedWeightTotal:
+          format: double
+          type: number
+          description: Weight of Order in pounds
+          example: 30.79
+        consigneeName:
+          type: string
+          maxLength: 60
+          description: Cosignee Name
+          example: Mike Tyson
+        packingBoxType:
+          type: string
+          maxLength: 2
+          example: 2
+          description: Packing Box Type; Subject to change depending on Warehouse
+          enum:
+            - "1"
+            - "2"
+            - "3"
+            - "4"
+            - "5"
+            - "7"
+            - "8"
+        dueDate:
+          description: Due Date
+          format: Date YYYY-MM-DDThh:mm:ss
+          type: string
+        dateCreated:
+          description: Order Created in GMT (UTC+0)
+          format: Date YYYY-MM-DDThh:mm:ss
+          type: string
+        orderLineItems:
+          uniqueItems: false
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderUpdateLineItemInformation'
+    OrderUpdateLineItemInformation:
+      type: object
+      properties:
+        orderID:
+          type: string
+          description: Order number and order extension
+          example: 43901393-0
+          maxLength: 32
+        lineItemID:
+          format: int32
+          type: integer
+          description: Line Item ID; Not split lines
+          example: 1
+        partNumber:
+          type: string
+          description: iHerb part Number / SKU
+          example: DRB-00888
+          maxLength: 9
+        quantity:
+          format: int32
+          type: integer
+          description: Order quantity in units/eaches
+        dateCreated:
+          description: Date in PST (UTC-8)
+          format: Date YYYY-MM-DDThh:mm:ss
+          type: string
+    OrderCancellation:
+      type: object
+      properties:
+        orderID:
+          type: string
+          description: Order number and order extension
+          example: 43901393-0
+          maxLength: 32
+        dateCreated:
+          description: Date in PST (UTC-8)
+          format: Date YYYY-MM-DDThh:mm:ss
+          type: string
+    OrderShippingLabelZpl:
+      type: object
+      properties:
+        orderID:
+          type: string
+          description: Order number and order extension
+          example: 43901393-0
+          maxLength: 32
+        dateCreated:
+          description: Date in PST (UTC-8)
+          format: Date YYYY-MM-DDThh:mm:ss
+          type: string
+        zpl:
+          description: Label in ZPL Format 
+          type: string
+          example: 
+        shippingSortCode:
+          description: Shipping Sort Code, dependent on Carrier, Shipping Service
+          format: int32
+          type: integer
+          example: 601
+        verificationCode:
+          type: string
+        reasonCode:
+          format: int32
+          type: integer
+        hawbNo:
+          type: string
+        portCode:
+          type: string
+    ShipmentManifestMasterBillOfLading:
+      type: object
+      properties:
+        billofLadingNo:
+          type: string
+          description: Bill of Lading Number
+          example: 1234567
+        freightForwarder:
+          type: string
+          description: Freight Forwarder
+          example: CEVA Logistics
+        externalManifestId:
+          type: string
+          description: 3PL/Cainiao Manifest ID
+          example: 12345
+        originAirport:
+          type: string
+          description: Origin Airport
+          example: HKG
+        destinationAirportCode:          
+          type: string
+          description: Destination Airport Code, Based on ShipSort Code, Zip Code Branch
+          example: NRT
+        shippingSortCode:
+          format: int32
+          type: integer
+          example: 600
+          description: Shipping Sort Code; for example 601=Sagawa
+          enum: 
+            - 600
+            - 601
+        dateCreated:
+          description: Date in PST (UTC-8)
+          format: Date YYYY-MM-DDThh:mm:ss
+          type: string
+    SimpleResponse:
+      type: object
+      description: |
+        #API Call Accepted. 
+        **StatusCode** : S=Success, E=Error
+        **Message** : Error Message where applicable
+      required:
+        - Status
+      properties:
+        Status:
+          type: string
+          description: S=Success, E=Error            
+          enum:
+            - S
+            - E
+        Message:
+          type: string
+          description: Response/Error Message if applicable
+          
