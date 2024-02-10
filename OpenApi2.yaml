@@ -30,18 +30,9 @@ paths:
       security: []
       requestBody:
         content:
-          application/json-patch+json:
-            schema:
-              $ref: '#/components/schemas/Products'
           application/json:
             schema:
-              $ref: '#/components/schemas/Products'
-          text/json:
-            schema:
-              $ref: '#/components/schemas/Products'
-          application/*+json:
-            schema:
-              $ref: '#/components/schemas/Products'
+              $ref: '#/components/schemas/Products'          
       responses:
         '200':
           description: Success
@@ -55,18 +46,9 @@ paths:
       operationId: TransferShipment
       requestBody:
         content:
-          application/json-patch+json:
-            schema:
-              $ref: '#/components/schemas/TransferShipment'
           application/json:
             schema:
-              $ref: '#/components/schemas/TransferShipment'
-          text/json:
-            schema:
-              $ref: '#/components/schemas/TransferShipment'
-          application/*+json:
-            schema:
-              $ref: '#/components/schemas/TransferShipment'
+              $ref: '#/components/schemas/TransferShipment'          
       responses:
         '200':
           description: Success
@@ -80,18 +62,9 @@ paths:
       operationId: TransferShipmentMBOL
       requestBody:
         content:
-          application/json-patch+json:
-            schema:
-              $ref: '#/components/schemas/MasterBillOfLading'
           application/json:
             schema:
-              $ref: '#/components/schemas/MasterBillOfLading'
-          text/json:
-            schema:
-              $ref: '#/components/schemas/MasterBillOfLading'
-          application/*+json:
-            schema:
-              $ref: '#/components/schemas/MasterBillOfLading'
+              $ref: '#/components/schemas/MasterBillOfLading'          
       responses:
         '200':
           description: Success
@@ -104,18 +77,9 @@ paths:
       operationId: "FulfillOrder"
       requestBody:
         content:
-          application/json-patch+json:
-            schema:
-              $ref: '#/components/schemas/OrderInformation'
           application/json:
             schema:
-              $ref: '#/components/schemas/OrderInformation'
-          text/json:
-            schema:
-              $ref: '#/components/schemas/OrderInformation'
-          application/*+json:
-            schema:
-              $ref: '#/components/schemas/OrderInformation'
+              $ref: '#/components/schemas/OrderInformation'          
       responses:
         '200':
           description: Call Accepted
@@ -136,18 +100,9 @@ paths:
       operationId: SalesOrderUpdate
       requestBody:
         content:
-          application/json-patch+json:
-            schema:
-              $ref: '#/components/schemas/OrderUpdate'
           application/json:
             schema:
-              $ref: '#/components/schemas/OrderUpdate'
-          text/json:
-            schema:
-              $ref: '#/components/schemas/OrderUpdate'
-          application/*+json:
-            schema:
-              $ref: '#/components/schemas/OrderUpdate'
+              $ref: '#/components/schemas/OrderUpdate'          
       responses:
         '200':
           description: Success
@@ -161,18 +116,9 @@ paths:
       operationId: SalesOrderCancel
       requestBody:
         content:
-          application/json-patch+json:
-            schema:
-              $ref: '#/components/schemas/OrderCancellation'
           application/json:
             schema:
-              $ref: '#/components/schemas/OrderCancellation'
-          text/json:
-            schema:
-              $ref: '#/components/schemas/OrderCancellation'
-          application/*+json:
-            schema:
-              $ref: '#/components/schemas/OrderCancellation'
+              $ref: '#/components/schemas/OrderCancellation'          
       responses:
         '200':
           description: Success
@@ -185,18 +131,9 @@ paths:
       operationId: ShipLabelZPL
       requestBody:
         content:
-          application/json-patch+json:
-            schema:
-              $ref: '#/components/schemas/OrderShippingLabelZpl'
           application/json:
             schema:
-              $ref: '#/components/schemas/OrderShippingLabelZpl'
-          text/json:
-            schema:
-              $ref: '#/components/schemas/OrderShippingLabelZpl'
-          application/*+json:
-            schema:
-              $ref: '#/components/schemas/OrderShippingLabelZpl'
+              $ref: '#/components/schemas/OrderShippingLabelZpl'          
       responses:
         '200':
           description: Success
@@ -209,18 +146,9 @@ paths:
       operationId: ShipmentManifest
       requestBody:
         content:
-          application/json-patch+json:
-            schema:
-              $ref: '#/components/schemas/ShipmentManifestMasterBillOfLading'
           application/json:
             schema:
-              $ref: '#/components/schemas/ShipmentManifestMasterBillOfLading'
-          text/json:
-            schema:
-              $ref: '#/components/schemas/ShipmentManifestMasterBillOfLading'
-          application/*+json:
-            schema:
-              $ref: '#/components/schemas/ShipmentManifestMasterBillOfLading'
+              $ref: '#/components/schemas/ShipmentManifestMasterBillOfLading'          
       responses:
         '200':
           description: Success
