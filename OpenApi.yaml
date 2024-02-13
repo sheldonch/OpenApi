@@ -18,6 +18,8 @@ servers:
     url: https://virtserver.swaggerhub.com/hugo.sanchez/iHerb-WMS-API/1.0.0-oas3-1
   - description: Prism
     url: http://localhost:4010  
+  - description: visualstudio
+    url: http://localhost:5000
 tags: 
   - name: HealthCheck
     description: | 
@@ -429,6 +431,7 @@ components:
           example: myUsername
     InventoryAdjustment:
       type: object
+      required: ["partNumber"]
       properties:
         binLocation:
           type: string
@@ -496,7 +499,7 @@ components:
         dateLastChanged:          
           format: YYYY-MM-DDThh:mm:ss
           type: string
-          description: Date Last Changes
+          description: Date Last Changed in UTC
           example: 2020-03-07T00:00:00
         usernameLastChanged:
           description: User Last Changed
